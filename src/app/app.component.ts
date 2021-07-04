@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   //
 
 
-  finalOut: any[] = [];
+  finalOut: Result[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private judge: JudgeService,
@@ -110,6 +110,8 @@ export class AppComponent implements OnInit {
 
   reset() {
     this.form.reset();
+    this.finalOut = [];
+    this.languages = [];
   }
   reload() {
     window.location.reload();

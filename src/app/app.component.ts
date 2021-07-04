@@ -13,6 +13,12 @@ import { Language } from './Language';
 })
 export class AppComponent implements OnInit {
 
+  indexValue: number = 0;
+
+  // Final Values.
+  sourceCodeConverted: string = '';
+  stdInArr: Array<string> = [];
+  stdOutArr: Array<string> = [];
 
   showLanguages: boolean = false;
   languages: Array<Language> = [];
@@ -36,7 +42,7 @@ export class AppComponent implements OnInit {
 
 
   form: FormGroup = this.formBuilder.group({
-    code: [this.codeB, [Validators.required]], // Remove defaults later
+    code: ['', [Validators.required]], // Remove defaults later
     langId: [this.langIdNum, [Validators.required]], // Remove defaults later
     other: this.formBuilder.array([this.addOtherFormGroupDefault()]) // Remove defaults later
   });
@@ -57,26 +63,24 @@ export class AppComponent implements OnInit {
 
   addOtherFormGroupDefault() {
     return this.formBuilder.group({
-      stdin: ['MTcgMjggMzAKOTkgMTYgOAo=', Validators.required],
-      stdout: ['MiAxCg==', Validators.required],
+      stdin: ['', Validators.required],
+      stdout: ['', Validators.required],
     });
   }
 
   onSubmit() {
-    // console.log(this.form.value);
     this.finalOut = [];
     const formArray: FormArray = this.form.get('other') as FormArray;
 
-    const source_code = this.form.get('code')?.value;
+    const source_code = this.sourceCodeConverted;
     const language_id = this.form.get('langId')?.value;
 
 
-    // console.log(source_code);
 
-    for (let formgroup of formArray.controls) {
+    for (let i in formArray.controls) {
 
-      const stdin = (formgroup as FormGroup).get('stdin')?.value;
-      const expected_output = (formgroup as FormGroup).get('stdout')?.value;
+      const stdin = this.stdInArr[i];
+      const expected_output = this.stdOutArr[i];
 
       if (stdin && expected_output) {
 
@@ -86,7 +90,6 @@ export class AppComponent implements OnInit {
           const token = res['token'] as string;
           setTimeout(() => {
             this.judge.checkCodeStatus(token).subscribe((data: Result) => {
-              // console.log(data);
               this.finalOut.push(data);
               this.loader.hide();
             }, err => {
@@ -117,16 +120,56 @@ export class AppComponent implements OnInit {
     window.location.reload();
   }
 
-  getAllLanguages(){
+  getAllLanguages() {
 
     this.judge.getAllLanguages().subscribe(
       data => {
         this.languages = data;
       }, err => {
         this.languages = [];
-        console.log(err);
+        console.error(err);
       }
     );
   }
 
+
+  onFileChange(event: any) {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const str: string[] | undefined = reader.result?.toString().split('base64,');
+        this.sourceCodeConverted = str ? str[1] : '';
+      };
+    }
+  }
+
+
+  onInputChange(event: any) {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const str: string[] | undefined = reader.result?.toString().split('base64,');
+        this.stdInArr[this.indexValue] = str ? str[1] : '';
+      };
+    }
+  }
+
+  onOutputChange(event: any) {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const str: string[] | undefined = reader.result?.toString().split('base64,');
+        this.stdOutArr[this.indexValue] = str ? str[1] : '';
+      };
+    }
+  }
 }

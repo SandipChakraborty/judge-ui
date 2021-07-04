@@ -29,7 +29,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <p>
       <label style="color: rgb(30, 32, 3);"><b>Base 64 encoded code:</b></label>&nbsp;&nbsp;
-      <input style="height: 50px;width: 60%;" type="file" formControlName="code">
+      <input style="height: 50px;width: 60%;" type="file" (change)="onFileChange($event)" formControlName="code">
     </p>
 
     <p>
@@ -46,7 +46,7 @@
         </div>
         <br>
       </div>
-      <div style="background-color: gainsboro" formArrayName="other" *ngFor="let oth of getControls(); let i = index"
+      <div style="background-color: gainsboro;margin: 10px;" formArrayName="other" *ngFor="let oth of getControls(); let i = index"
         class="form-group">
         <div [formGroupName]="i">
           <div class="form-group" class="row cols-md-12">
@@ -54,13 +54,13 @@
               Input
             </label>
             <div class="col-sm-4">
-              <input type="file" class="form-control" id="stdin" placeholder="stdin" formControlName="stdin">
+              <input type="file" class="form-control" id="stdin" placeholder="stdin" (change)="onInputChange($event); indexValue = i" formControlName="stdin">
             </div>
             <label style="color: indigo;" class="col-sm-2 control-label" for="stdout">
               Output
             </label>
             <div class="col-sm-4">
-              <input type="file" placeholder="stdout" class="form-control" formControlName="stdout">
+              <input type="file" placeholder="stdout" class="form-control" (change)="onOutputChange($event); indexValue = i" formControlName="stdout">
             </div>
           </div>
           <br>

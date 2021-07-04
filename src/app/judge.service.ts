@@ -17,6 +17,7 @@ export class JudgeService {
 
   postCode(sourceCode: SourceCode): Observable<any> {
     const uri = `${this.BASE_URI}/submissions/?base64_encoded=true`;
+    console.log(JSON.stringify(sourceCode));
     return this.http.post(uri, sourceCode);
   }
 

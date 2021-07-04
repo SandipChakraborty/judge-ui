@@ -14,6 +14,7 @@ import { Language } from './Language';
 export class AppComponent implements OnInit {
 
   indexValue: number = 0;
+  showStdout: boolean = false;
 
   // Final Values.
   sourceCodeConverted: string = '';
@@ -96,7 +97,7 @@ export class AppComponent implements OnInit {
               console.error(err);
               this.loader.hide();
             });
-          }, 2000);
+          }, 5000);
         }, err => {
           console.error(err);
           this.loader.hide();

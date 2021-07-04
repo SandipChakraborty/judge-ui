@@ -79,10 +79,13 @@
 <div style="margin: 50px;" *ngIf="finalOut.length !== 0">
   <h1> Final Result </h1>
 
+  <input type="checkbox" id="showStdout" name="showStdout" [(ngModel)]="showStdout">
+  <span style="color: red;"> &nbsp;&nbsp; show std out:</span><br><br>
+
   <span *ngFor="let fo of finalOut; let i = index">
 
     <span style="color: red;">Test Case:</span> {{i+1}} <br><br>
-    <span style="color: red;">stdout:</span> {{fo.stdout}} <br>
+    <span *ngIf="showStdout" style="color: red;">stdout:</span> <span *ngIf="showStdout"> {{fo.stdout}} </span><br>
     <span style="color: red;">time:</span> {{fo.time}} <br>
     <span style="color: red;">memory:</span> {{fo.memory}} <br>
     <span style="color: red;">stderr:</span> {{fo.stderr}} <br>

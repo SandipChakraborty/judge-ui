@@ -1,0 +1,88 @@
+
+<section class="sample-app-content">
+  <h1>Judgement Form:</h1>
+
+  <button type="submit" (click)="reset()">Reset</button>
+  <button type="submit" (click)="reload()">Reload</button>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p>
+      <label style="color: rgb(30, 32, 3);"><b>Base 64 encoded code:</b></label>
+      <input style="height: 50px;width: 60%;" type="text" formControlName="code">
+    </p>
+
+    <p>
+      <label style="color: rgb(30, 32, 3);"><b>Language code:</b></label>
+      <input type="number" formControlName="langId">
+    </p>
+
+    <div>
+      <div class="form-group">
+        <div class="col-md-offset-2 col-md-4">
+          <button type="button" class="btn btn-primary" (click)="addSkillButtonClick()">
+            Add Input Output Details
+          </button>
+        </div>
+        <br>
+      </div>
+      <div style="background-color: gainsboro" formArrayName="other" *ngFor="let oth of getControls(); let i = index"
+        class="form-group">
+        <div [formGroupName]="i">
+          <div class="form-group" class="row cols-md-12">
+            <label style="color: indigo;" class="col-sm-2 control-label" for="stdin">
+              Input
+            </label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" id="stdin" placeholder="stdin" formControlName="stdin">
+            </div>
+            <label style="color: indigo;" class="col-sm-2 control-label" for="stdout">
+              Output
+            </label>
+            <div class="col-sm-4">
+              <input type="text" placeholder="stdout" class="form-control" formControlName="stdout">
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+
+
+    <p>
+      <button type="submit">Submit</button>
+    </p>
+  </form>
+</section>
+
+<div style="margin: 50px;" *ngIf="finalOut.length !== 0">
+  <h1> Final Result </h1>
+
+  <span *ngFor="let fo of finalOut; let i = index">
+
+    <span style="color: red;">Test Case:</span> {{i+1}} <br><br>
+    <span style="color: red;">stdout:</span> {{fo.stdout}} <br>
+    <span style="color: red;">time:</span> {{fo.time}} <br>
+    <span style="color: red;">memory:</span> {{fo.memory}} <br>
+    <span style="color: red;">stderr:</span> {{fo.stderr}} <br>
+    <span style="color: red;">token:</span> {{fo.token}} <br>
+    <span style="color: red;">compile_output:</span> {{fo.compile_output}} <br>
+    <span style="color: red;">message:</span> {{fo.message}} <br>
+    <span style="color: red;">status:</span> <br>
+    &nbsp;&nbsp;&nbsp; <span style="color: red;">id:</span> {{fo.status.id}} <br>
+    &nbsp;&nbsp;&nbsp; <span style="color: red;">description:</span><span
+      style="color: rgb(3, 221, 14); size: 3in;">&nbsp;&nbsp;{{fo.status.description}}</span><br><br>
+
+    <span style="color: lightblue;">============================================================================================================</span><br><br>
+  </span>
+</div>
+
+<button type="submit" (click)="reset()">Reset</button>
+<button type="submit" (click)="reload()">Reload</button>
+
+
+<!-- <mat-spinner color="warn"></mat-spinner> -->
+
+
+
+<router-outlet></router-outlet>

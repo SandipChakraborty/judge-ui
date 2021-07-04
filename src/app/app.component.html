@@ -1,18 +1,39 @@
 
+
+<div>
+  <h1>Language List</h1>
+
+  <button style="background-color: aquamarine;" type="submit" (click)="getAllLanguages()">Get All Languages</button>&nbsp;
+  <button style="background-color: rosybrown;" type="submit" (click)="languages = []">Hide All Languages</button>
+
+  <p *ngFor="let lang of languages">
+    &nbsp;&nbsp;<span>id:</span><span style="color: salmon;">  {{lang.id}}</span>&nbsp;
+    <span>name:</span><span style="color: salmon;">  {{lang.name}}</span>&nbsp;
+    <span>is_archived:</span> <span style="color: salmon;">  {{lang.is_archived}}</span> <br>
+  </p>
+
+  <button *ngIf="languages.length" style="background-color: rosybrown;" type="submit" (click)="languages = []">Hide All Languages</button>
+
+
+</div>
+
+
+
+
 <section class="sample-app-content">
   <h1>Judgement Form:</h1>
 
-  <button type="submit" (click)="reset()">Reset</button>
+  <button type="submit" (click)="reset()">Reset</button>&nbsp;
   <button type="submit" (click)="reload()">Reload</button>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <p>
-      <label style="color: rgb(30, 32, 3);"><b>Base 64 encoded code:</b></label>
+      <label style="color: rgb(30, 32, 3);"><b>Base 64 encoded code:</b></label>&nbsp;&nbsp;
       <input style="height: 50px;width: 60%;" type="text" formControlName="code">
     </p>
 
     <p>
-      <label style="color: rgb(30, 32, 3);"><b>Language code:</b></label>
+      <label style="color: rgb(30, 32, 3);"><b>Language code:</b></label>&nbsp;&nbsp;
       <input type="number" formControlName="langId">
     </p>
 

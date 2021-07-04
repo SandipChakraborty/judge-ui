@@ -29,7 +29,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <p>
       <label style="color: rgb(30, 32, 3);"><b>Base 64 encoded code:</b></label>&nbsp;&nbsp;
-      <input style="height: 50px;width: 60%;" type="text" formControlName="code">
+      <input style="height: 50px;width: 60%;" type="file" formControlName="code">
     </p>
 
     <p>
@@ -54,13 +54,13 @@
               Input
             </label>
             <div class="col-sm-4">
-              <input type="text" class="form-control" id="stdin" placeholder="stdin" formControlName="stdin">
+              <input type="file" class="form-control" id="stdin" placeholder="stdin" formControlName="stdin">
             </div>
             <label style="color: indigo;" class="col-sm-2 control-label" for="stdout">
               Output
             </label>
             <div class="col-sm-4">
-              <input type="text" placeholder="stdout" class="form-control" formControlName="stdout">
+              <input type="file" placeholder="stdout" class="form-control" formControlName="stdout">
             </div>
           </div>
           <br>

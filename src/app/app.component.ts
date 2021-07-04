@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
           const token = res['token'] as string;
           setTimeout(() => {
             this.judge.checkCodeStatus(token).subscribe((data: Result) => {
-              console.log(data);
+              // console.log(data);
               this.finalOut.push(data);
               this.loader.hide();
             }, err => {

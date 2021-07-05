@@ -1,5 +1,7 @@
 export interface Result {
+    stdin: string;
     stdout: string;
+    expectedOut: string;
     time: string;
     memory: string;
     stderr: string;

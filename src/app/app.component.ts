@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
+    this.showStdout = false;
     this.finalOut = [];
     const formArray: FormArray = this.form.get('other') as FormArray;
 
@@ -91,6 +92,9 @@ export class AppComponent implements OnInit {
           const token = res['token'] as string;
           setTimeout(() => {
             this.judge.checkCodeStatus(token).subscribe((data: Result) => {
+              data.stdout = atob(data.stdout);
+              data.stdin = atob(stdin);
+              data.expectedOut = atob(expected_output);
               this.finalOut.push(data);
               this.loader.hide();
             }, err => {
